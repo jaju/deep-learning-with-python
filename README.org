@@ -1,0 +1,21 @@
+#+TITLE: Deep Learning with Python - The Book. 2nd Edition
+
+Code examples from the book as I study along.
+
+* Setup
+** Virtualenv
+#+begin_src bash
+  virtualenv -p python3.11 ~/.venv/deep-learning-book
+  source ~/.venv/deep-learning-book/bin/activate
+  pip install --upgrade pip poetry
+  poetry add python-lsp-server tensorflow tensorboard keras
+#+end_src
+
+** "Err, you want to look at these?"
+- [[https://mitelman.engineering/blog/python-best-practice/automating-python-best-practices-for-a-new-project/][Python Setup Best Practices]]
+
+* Code
+#+begin_src python
+  print("Hello, Python")
+#+end_src
+
