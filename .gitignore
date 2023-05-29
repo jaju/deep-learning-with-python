@@ -3,3 +3,5 @@
 /docs/**/*.pdf
 /poetry.lock
 /**/*.pyc
+/**/.ipynb_checkpoints
+/.virtual_documents/
