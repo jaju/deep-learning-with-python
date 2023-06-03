@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import book.ch2.mnist_ex as mnist_ex
 
+
 def header(msg):
-    print("\n" + msg)
+    print(f"\n{msg}")
     print("-" * len(msg))
 
 

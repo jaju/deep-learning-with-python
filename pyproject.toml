@@ -9,7 +9,7 @@ packages = [{include = "book"}]
 [tool.poetry.dependencies]
 python = ">=3.11,<3.12"
 python-lsp-server = "^1.7.3"
-tensorflow = ">=2.12.0"
+tensorflow = "^2.12"
 keras = "^2.12.0"
 tensorboard = ">=2.13.0"
 jupyterlab = "^4.0.0"
