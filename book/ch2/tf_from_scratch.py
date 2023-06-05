@@ -1,5 +1,7 @@
 import math
 import tensorflow as tf
+import time
+import numpy as np
 
 
 class NaiveDense:
@@ -75,9 +77,10 @@ def one_training_step(model, images_batch, labels_batch):
 
 
 def fit(model, images, labels, epochs, batch_size=128):
+    print(f"Fitting. Batch size = {batch_size}")
     for epoch_counter in range(epochs):
         print(f"Epoch count: {epoch_counter}")
-        batch_generator = BatchGenerator(images, labels)
+        batch_generator = BatchGenerator(images, labels, batch_size)
         for batch_counter in range(batch_generator.num_batches):
             images_batch, labels_batch = batch_generator.next()
             loss = one_training_step(model, images_batch, labels_batch)
@@ -94,12 +97,31 @@ train_images = train_images.astype("float32") / 255
 test_images = test_images.reshape((10000, 28 * 28))
 test_images = test_images.astype("float32") / 255
 
-model = NaiveSequential([
-    NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
-    NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
-])
-assert len(model.weights) == 4
 
-fit(model, train_images, train_labels, epochs=10, batch_size=128)
+with tf.device('/GPU'):
+    gpu_model = NaiveSequential([
+        NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
+        NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
+    ])
+    tic = time.perf_counter()
+    fit(gpu_model, train_images, train_labels, epochs=10, batch_size=8192)
+    toc = time.perf_counter()
+    print(f"GPU: Time taken: {toc - tic}")
 
-print(model)
+
+with tf.device('/CPU'):
+    cpu_model = NaiveSequential([
+        NaiveDense(input_size=28 * 28, output_size=512, activation=tf.nn.relu),
+        NaiveDense(input_size=512, output_size=10, activation=tf.nn.softmax)
+    ])
+    tic = time.perf_counter()
+    fit(cpu_model, train_images, train_labels, epochs=10, batch_size=8192)
+    toc = time.perf_counter()
+    print(f"CPU: Time taken: {toc - tic}")
+
+
+cpu_predictions = cpu_model(train_images)
+cpu_predictions = cpu_predictions.numpy()
+gpu_predictions = gpu_model(train_images)
+gpu_predictions = gpu_predictions.numpy()
+

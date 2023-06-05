@@ -5,10 +5,10 @@ Code examples from the book as I study along.
 * Setup
 ** Virtualenv
 #+begin_src bash
-  virtualenv -p python3.10 ~/.venv/deep-learning-book
+  virtualenv -p python3.11 ~/.venv/deep-learning-book
   source ~/.venv/deep-learning-book/bin/activate
   pip install --upgrade pip poetry
-  poetry add python-lsp-server tensorflow tensorboard keras
+  poetry update
 #+end_src
 
 ** "Err, you want to look at these?"
