@@ -41,8 +41,8 @@ learning_rate = 1e-1
 
 def training_step(inputs, targets):
     with tf.GradientTape() as tape:
-        predictions = model(inputs)
-        loss = square_loss(targets, predictions)
+        next_predictions = model(inputs)
+        loss = square_loss(targets, next_predictions)
     d_by_dW, d_by_db = tape.gradient(loss, [W, b])
     W.assign_sub(learning_rate * d_by_dW)
     b.assign_sub(learning_rate * d_by_db)
@@ -50,10 +50,9 @@ def training_step(inputs, targets):
 
 
 for step in range(40):
-    loss = training_step(inputs, targets)
-    print(f"Loss at step {step} = {loss:.4f}")
-
+    loss_at_step = training_step(inputs, targets)
+    print(f"Loss at step {step} = {loss_at_step:.4f}")
 
 predictions = model(inputs)
-plt.scatter(inputs[:,0], inputs[:, 1], c=predictions[:, 0] > 0.5)
+plt.scatter(inputs[:, 0], inputs[:, 1], c=predictions[:, 0] > 0.5)
 plt.show()
