@@ -5,10 +5,10 @@ Code examples from the book as I study along.
 * Setup
 ** Virtualenv
 #+begin_src bash
-  virtualenv -p python3.11 ~/.venv/deep-learning-book
-  source ~/.venv/deep-learning-book/bin/activate
-  pip install --upgrade pip poetry
-  poetry update
+  virtualenv -p python3.10 .venv/dlp
+  source .venv/dlp/bin/activate
+  pip install --upgrade pip python-lsp-server
+  pip install -r requirements.txt
 #+end_src
 
 ** "Err, you want to look at these?"
